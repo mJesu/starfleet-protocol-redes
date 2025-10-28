@@ -37,4 +37,5 @@ $(OBJDIR)/jogo.o: $(SRCDIR)/jogo.c $(INCLUDEDIR)/jogo.h $(INCLUDEDIR)/protocol.h
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	rm -rf $(OBJDIR) $(SERVER_EXEC) $(CLIENT_EXEC)
+	rm -f $(OBJDIR)/*.o
+	rm -f $(BINDIR)/server $(BINDIR)/client
