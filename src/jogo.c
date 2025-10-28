@@ -49,9 +49,10 @@ void print_info_acoes() {
     printf("Informe sua escolha por meio do código> ");
 }
 
-void print_finalizacao(PlayerInfo *client, PlayerInfo *server, int vitoria) {
+void print_finalizacao(PlayerInfo *client, PlayerInfo *server, int vitoria, int turnos_jogados) {
     printf("Inventário Final\n");
     printf("- HP Restante: %d\n", client->hp);
+    printf("- Turnos jogados: %d\n", turnos_jogados);
     printf("- Torpedos usados: %d\n", client->torpedos_usados);
     printf("- Escudos usados: %d\n", client->escudos_usados);
     if (vitoria == 1) {

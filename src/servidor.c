@@ -24,6 +24,7 @@ void usage(int argc, char **argv) {
 struct client_data {
     int csock;
     struct sockaddr_storage storage;
+    int turnos_jogados;
 };
 
 void * client_thread(void *data) {
@@ -53,6 +54,8 @@ void * client_thread(void *data) {
         client->opcao = client_option;
         server->opcao = server_option;
 
+        cdata->turnos_jogados++;
+
         int resultado = process_turno(client, server);
 
         msg.type = MSG_BATTLE_RESULT;
@@ -62,16 +65,21 @@ void * client_thread(void *data) {
         msg.server_hp = server->hp;
         msg.client_torpedoes = client->torpedos_usados;
         msg.client_shields = client->escudos_usados;
+
+        snprintf(msg.message, MSG_SIZE, "Turno %d", cdata->turnos_jogados);
+
         send_message(csock, &msg);
 
         if (resultado != 2) {
             if (resultado == 1 || resultado == -1){
                 msg.type = MSG_GAME_OVER;
+                snprintf(msg.message, MSG_SIZE, "%d", cdata->turnos_jogados);
                 send_message(csock, &msg);
                 break;
             }
             else if (resultado == 0) {
                 msg.type = MSG_ESCAPE;
+                snprintf(msg.message, MSG_SIZE, "%d", cdata->turnos_jogados);
                 send_message(csock, &msg);
                 break;
             }

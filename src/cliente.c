@@ -96,7 +96,8 @@ int main(int argc, char **argv) {
                 PlayerInfo server_player;
                 server_player.hp = msg.server_hp;
                 int vitoria = (client_player->hp > 0 && msg.server_hp <= 0) ? 1 : (client_player->hp <= 0) ? -1 : 0;
-                print_finalizacao(client_player, &server_player, vitoria);
+                int turnos_jogados = atoi(msg.message);
+                print_finalizacao(client_player, &server_player, vitoria, turnos_jogados);
                 
                 free(client_player);
                 close(client_socket);
@@ -106,7 +107,8 @@ int main(int argc, char **argv) {
             case MSG_ESCAPE: {
                 PlayerInfo server_player;
                 server_player.hp = msg.server_hp;
-                print_finalizacao(client_player, &server_player, 0);
+                int turnos_jogados = atoi(msg.message);
+                print_finalizacao(client_player, &server_player, 0, turnos_jogados);
 
                 free(client_player);
                 close(client_socket);
